@@ -13,7 +13,7 @@ namespace WpfApplication.ViewModels
 		{
 			_repository = new CustomersRepository();
             LoadData();
-		}
+		} 
         
 		private ObservableCollection<Customer> _customers;
 

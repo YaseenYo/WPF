@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Navigation;
 using WpfApplication.Stores;
 using WpfApplication.ViewModels;
 
 namespace WpfApplication.Commands
 {
     internal class NavigateCommand<TViewModel> : CommandBase
-        where TViewModel : ViewModelBase
+        where TViewModel : ViewModelBase 
     {
         private readonly NavigationStore _navigationStore;
         private readonly Func<TViewModel> _createViewModel;

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using WpfApplication.Models;
 using WpfApplication.Services;
@@ -13,14 +9,14 @@ namespace WpfApplication.Commands
     {
         private IProductRepository _productRepository;
 
-        public AddProductCommand(IProductRepository productRepository)
+        public AddProductCommand()
         {
-            _productRepository = productRepository;
+            _productRepository = new ProductRepository();
         }
 
         public override void Execute(object parameter)
         {
-            Product product = (Product) parameter;
+            Product product = parameter as Product;
             if (string.IsNullOrWhiteSpace(product.Name) || product.Price <= 0)
             {
                 MessageBox.Show("Fill all the fields");

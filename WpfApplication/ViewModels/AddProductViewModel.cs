@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfApplication.Commands;
 using WpfApplication.Models;
-using WpfApplication.Services;
 using WpfApplication.Stores;
 
 namespace WpfApplication.ViewModels
 {
     internal class AddProductViewModel : ViewModelBase
     {
-        private readonly IProductRepository _repository;
-
         public AddProductViewModel(NavigationStore navigationStore) : base(navigationStore)
         {
-            _repository = new ProductRepository();
-            AddProductCommand = new AddProductCommand(_repository);
+            AddProductCommand = new AddProductCommand();
             Product = new Product();
         }
 

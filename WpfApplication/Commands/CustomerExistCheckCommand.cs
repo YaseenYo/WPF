@@ -1,27 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WpfApplication.Models;
+﻿using WpfApplication.Models;
 using WpfApplication.Services;
+using WpfApplication.ViewModels;
 
 namespace WpfApplication.Commands
 {
     internal class CustomerExistCheckCommand : CommandBase
     {
         private readonly ICustomersRepository _customerRepository;
-        private Action OnCustomerExistCheck;
+        private readonly CartViewModel _viewModel;
 
-        public CustomerExistCheckCommand(ICustomersRepository customerRepository, Action onCustomerExistCheck)
+        public CustomerExistCheckCommand(CartViewModel viewModel)
         {
-            _customerRepository = customerRepository;
-            OnCustomerExistCheck = onCustomerExistCheck;
+            _customerRepository = new CustomersRepository();
+            _viewModel = viewModel;
         }
 
         public override void Execute(object parameter)
         {
-            OnCustomerExistCheck();
+            Customer customer = _customerRepository.Search(_viewModel.PhoneNumber);
+            _viewModel.IsCreditUsed = false;
+            //UseCreditCommand.OnCanExecuteChanged();
+            //RemoveCreditCommand.OnCanExecuteChanged();
+            
+            if (customer == null)
+            {
+                _viewModel.Message = "No Customer found";
+                _viewModel.Cart.Customer = new Customer();
+            }
+            else
+            {
+                _viewModel.Cart.Customer = customer;
+                _viewModel.Message = "";
+            }
+            _viewModel.Cart.CreditUsed = 0;
+            _viewModel.Cart.TotalAmount = _viewModel.Cart.ProductsAmount;
         }
     }
 }

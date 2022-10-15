@@ -1,30 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using WpfApplication.Models;
+using WpfApplication.ViewModels;
 
 namespace WpfApplication.Commands
 {
     internal class RemoveCreditCommand : CommandBase
     {
-        private Action _TargetExecuteMethod;
-        private Func<bool> _TargetCanExecuteMethod;
+        private readonly CartViewModel _viewModel;
 
-        public RemoveCreditCommand(Action executeMethod, Func<bool> canExecuteMethod)
+        public RemoveCreditCommand(CartViewModel viewModel)
         {
-            _TargetCanExecuteMethod = canExecuteMethod;
-            _TargetExecuteMethod = executeMethod;
+            _viewModel = viewModel;
+
+            _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+        }
+
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(_viewModel.IsCreditUsed))
+            {
+                OnCanExecuteChanged();
+            }
         }
 
         public override void Execute(object parameter)
         {
-            _TargetExecuteMethod();
+            _viewModel.Cart.TotalAmount += _viewModel.Cart.CreditUsed;
+            _viewModel.Cart.CreditUsed = 0;
+            _viewModel.IsCreditUsed = false;
         }
         
         public override bool CanExecute(object parameter)
         {
-            return _TargetCanExecuteMethod();
+            return _viewModel.IsCreditUsed;
         }
     }
 }

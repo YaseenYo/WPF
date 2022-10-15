@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using WpfApplication.Models;
 using WpfApplication.Services;
+using WpfApplication.ViewModels;
 
 namespace WpfApplication.Commands
 {
     internal class RegisterCommand : CommandBase
     {
         private readonly ICustomersRepository _customersRepository;
-        private readonly Action _onRegister;
+        private readonly CustomerRegistrationViewModel _viewModel;
 
-        public RegisterCommand(ICustomersRepository customersRepository,Action onRegister)
+        public RegisterCommand(CustomerRegistrationViewModel viewModel)
         {
-            _customersRepository = customersRepository;
-            _onRegister = onRegister;
+            _customersRepository = new CustomersRepository();
+            _viewModel = viewModel;
         }
 
         public override void Execute(object parameter)
@@ -33,13 +30,13 @@ namespace WpfApplication.Commands
             Customer customerExist = _customersRepository.Search(customer.Phone);
             if(customerExist != null)
             {
-                MessageBox.Show("Customer Already Exist");
+                MessageBox.Show($"Customer Already Exist With Mobile Number {customer.Phone}");
                 return; 
             }
             customer.Id= Guid.NewGuid();
             _customersRepository.Add(customer);
             MessageBox.Show("Customer Registered Successfully");
-            _onRegister();
+            _viewModel.Customer = new Customer();
         }
     }
 }

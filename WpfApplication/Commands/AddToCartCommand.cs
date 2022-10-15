@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using WpfApplication.Models;
 using WpfApplication.Services;
 
@@ -15,7 +10,7 @@ namespace WpfApplication.Commands
 
         public AddToCartCommand()
         {
-            _cartRepository = new CartRepository();
+            _cartRepository = new CartRepository(); 
         }
 
         public override void Execute(object parameter)

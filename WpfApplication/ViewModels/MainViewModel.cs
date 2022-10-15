@@ -16,7 +16,7 @@ namespace WpfApplication.ViewModels
         public MainViewModel(NavigationStore navigationStore) : base(navigationStore)
         {
             _navigationStore = navigationStore;
-
+             
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
 

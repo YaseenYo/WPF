@@ -1,24 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using WpfApplication.Models;
+using WpfApplication.Services;
+using WpfApplication.ViewModels;
 
 namespace WpfApplication.Commands
 {
     internal class SearchTransactionCommand : CommandBase
     {
-        private readonly Action _onSearchTransactionCommand;
+        private readonly SearchTransactionViewModel _viewModel;
+        private readonly ITransactionRepository _transactionRepository;
 
-        public SearchTransactionCommand(Action onSearchTransactionCommand)
+        public SearchTransactionCommand(SearchTransactionViewModel viewModel)
         {
-            _onSearchTransactionCommand = onSearchTransactionCommand;
+            _viewModel = viewModel;
+            _transactionRepository = new TransactionRepository();
         }
 
         public override void Execute(object parameter)
         {
-            _onSearchTransactionCommand();
+            Transaction transaction = _transactionRepository.Search(_viewModel.TransactionId);
+            if (transaction != null)
+            {
+                _viewModel.Transaction = transaction;
+                return;
+            }
+            _viewModel.Transaction = new Transaction();
         }
     }
 }

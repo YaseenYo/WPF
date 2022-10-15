@@ -1,29 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using WpfApplication.Models;
 using WpfApplication.Services;
+using WpfApplication.ViewModels;
 
 namespace WpfApplication.Commands
 {
     internal class RemoveProductCommand : CommandBase
     {
-        private Action _onProductRemoved;
-        private ICartRepository _cartRepository;
+        private readonly CartViewModel _viewModel;
+        private readonly ICartRepository _cartRepository;
 
-        public RemoveProductCommand(Action onProductRemoved)
+        public RemoveProductCommand(CartViewModel viewModel)
         {
-            _onProductRemoved = onProductRemoved;
             _cartRepository = new CartRepository();
+            _viewModel = viewModel;
         }
 
         public override void Execute(object parameter)
         {
             Product product = parameter as Product;
             _cartRepository.RemoveProduct(product);
-            _onProductRemoved();
+            _viewModel.Cart.Products = new ObservableCollection<Product>(_cartRepository.GetProducts());
+            _viewModel.Cart.ProductsAmount = _cartRepository.GetProductsAmount();
+            if (_viewModel.Cart.Products.Count == 0)
+            {
+                _viewModel.Cart.TotalAmount = _viewModel.Cart.ProductsAmount;
+                _viewModel.Cart.CreditUsed = 0;
+                _viewModel.IsCreditUsed = false;
+                _viewModel.UseCreditCommand.OnCanExecuteChanged();
+                _viewModel.RemoveCreditCommand.OnCanExecuteChanged();
+            }
+            else
+            {
+                _viewModel.Cart.TotalAmount = _viewModel.Cart.ProductsAmount - _viewModel.Cart.CreditUsed;
+            }
         }
     }
 }

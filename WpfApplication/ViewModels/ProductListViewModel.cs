@@ -17,7 +17,7 @@ namespace WpfApplication.ViewModels
 
             AddToCartCommand = new AddToCartCommand();
 
-            LoadData();
+            LoadData(); 
         }
 
         public ICommand AddToCartCommand { get; }
