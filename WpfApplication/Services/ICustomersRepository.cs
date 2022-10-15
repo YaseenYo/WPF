@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using WpfApplication.Models;
+
+namespace WpfApplication.Services
+{
+    interface ICustomersRepository
+    {
+        List<Customer> GetAll();
+        bool Add(Customer customer);
+        Customer Search(Int64 phoneNumber);
+        void Update(Customer customer);
+    }
+}
