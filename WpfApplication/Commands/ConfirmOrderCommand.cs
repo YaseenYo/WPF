@@ -4,6 +4,7 @@ using WpfApplication.Models;
 using WpfApplication.ViewModels;
 using System.Linq;
 using WpfApplication.Services;
+using Microsoft.Extensions.Logging;
 
 namespace WpfApplication.Commands
 {
@@ -13,14 +14,16 @@ namespace WpfApplication.Commands
         private readonly ITransactionRepository _transactionRepository;
         private readonly ICustomersRepository _customerRepository;
         private readonly ICartRepository _cartRepository;
+        private readonly ILogger<ConfirmOrderCommand> _logger;
 
-        public ConfirmOrderCommand(CartViewModel viewModel, ITransactionRepository transactionRepository, 
-            ICustomersRepository customerRepository, ICartRepository cartRepository)
+        public ConfirmOrderCommand(CartViewModel viewModel, ITransactionRepository transactionRepository,
+            ICustomersRepository customerRepository, ICartRepository cartRepository, ILogger<ConfirmOrderCommand> logger)
         {
             _viewModel = viewModel;
             _transactionRepository = transactionRepository;
             _customerRepository = customerRepository;
             _cartRepository = cartRepository;
+            _logger = logger;
         }
 
         public override void Execute(object parameter)
@@ -43,6 +46,7 @@ namespace WpfApplication.Commands
                 Address = _viewModel.Cart.Customer.Address,
             };
             _customerRepository.Update(customer);
+            _logger.LogInformation($"Order Successfull And Customer {_viewModel.Cart.Customer.Name} have been Credited with rs {percentageAmount}");
             MessageBox.Show($"Order Successfull And Customer {_viewModel.Cart.Customer.Name} have been Credited with rs {percentageAmount}");
             _cartRepository.ClearCart();
             _viewModel.Cart = _cartRepository.GetCart();

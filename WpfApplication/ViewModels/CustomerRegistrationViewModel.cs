@@ -1,16 +1,17 @@
-﻿using System.Windows.Input;
+﻿using Microsoft.Extensions.Logging;
+using System.Windows.Input;
 using WpfApplication.Commands;
 using WpfApplication.Models;
 using WpfApplication.Services;
-using WpfApplication.Stores;
 
 namespace WpfApplication.ViewModels
 {
     internal class CustomerRegistrationViewModel : ViewModelBase
     {
-        public CustomerRegistrationViewModel(ICustomersRepository customersRepository)// : base(store,navigator)
+        public CustomerRegistrationViewModel(ICustomersRepository customersRepository,
+            ILogger<RegisterCommand> logger)
         {
-            RegisterCommand = new RegisterCommand(this,customersRepository);
+            RegisterCommand = new RegisterCommand(this,customersRepository,logger);
             Customer = new Customer();
         }
 

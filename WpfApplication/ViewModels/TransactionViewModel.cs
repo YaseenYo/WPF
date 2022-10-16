@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using WpfApplication.Models;
 using WpfApplication.Services;
-using WpfApplication.Stores;
 
 namespace WpfApplication.ViewModels
 {
@@ -9,7 +8,7 @@ namespace WpfApplication.ViewModels
     {
 		private readonly ITransactionRepository _repository;
 
-        public TransactionViewModel(ITransactionRepository repository) //: base(store,navigator)
+        public TransactionViewModel(ITransactionRepository repository)
 		{
 			_repository = repository;
 			LoadData();

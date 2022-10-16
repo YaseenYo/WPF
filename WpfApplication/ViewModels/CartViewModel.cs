@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Windows.Input;
 using WpfApplication.Commands;
 using WpfApplication.Models;
 using WpfApplication.Services;
-using WpfApplication.Stores;
 
 namespace WpfApplication.ViewModels
 {
@@ -11,21 +11,21 @@ namespace WpfApplication.ViewModels
     {
         private readonly ICartRepository _cartRepository;
 
-        public CartViewModel(ICartRepository cartRepository, IProductRepository productRepository,
-            ICustomersRepository customerRepository, ITransactionRepository transactionRepository)
+        public CartViewModel(ICartRepository cartRepository, ICustomersRepository customerRepository, 
+            ITransactionRepository transactionRepository, ILogger<ConfirmOrderCommand> logger)
         {
             _cartRepository = cartRepository;
             Cart = _cartRepository.GetCart();
             Cart.ProductsAmount = _cartRepository.GetProductsAmount();
             Cart.TotalAmount = Cart.ProductsAmount - Cart.CreditUsed;
             IsCreditUsed = Cart.CreditUsed != 0;
-            CustomerExistCheckCommand = new CustomerExistCheckCommand(this,customerRepository);
-            RemoveProductCommand = new RemoveProductCommand(this,cartRepository);
+            CustomerExistCheckCommand = new CustomerExistCheckCommand(this, customerRepository);
+            RemoveProductCommand = new RemoveProductCommand(this, cartRepository);
             UseCreditCommand = new UseCreditCommand(this);
             RemoveCreditCommand = new RemoveCreditCommand(this);
-            ConfirmOrderCommand = new ConfirmOrderCommand(this, transactionRepository, 
-                customerRepository, _cartRepository);
-            CancelOrderCommand = new CancelOrderCommand(this,_cartRepository);
+            ConfirmOrderCommand = new ConfirmOrderCommand(this, transactionRepository,
+                customerRepository, _cartRepository, logger);
+            CancelOrderCommand = new CancelOrderCommand(this, _cartRepository);
         }
 
         public ICommand CustomerExistCheckCommand { get; }

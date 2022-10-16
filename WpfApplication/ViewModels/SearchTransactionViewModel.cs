@@ -3,13 +3,12 @@ using System.Windows.Input;
 using WpfApplication.Commands;
 using WpfApplication.Models;
 using WpfApplication.Services;
-using WpfApplication.Stores;
 
 namespace WpfApplication.ViewModels
 {
     internal class SearchTransactionViewModel : ViewModelBase
     {
-        public SearchTransactionViewModel(ITransactionRepository transactionRepository) //: base(store,navigator)
+        public SearchTransactionViewModel(ITransactionRepository transactionRepository)
         {
             Transaction = new Transaction();
             SearchTransactionCommand = new SearchTransactionCommand(this, transactionRepository);

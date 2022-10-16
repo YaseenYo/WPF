@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using WpfApplication.Models;
 using WpfApplication.Services;
-using WpfApplication.Stores;
 
 namespace WpfApplication.ViewModels
 {
@@ -9,7 +8,7 @@ namespace WpfApplication.ViewModels
     {
 		private readonly ICustomersRepository _repository;
 
-        public CustomerListViewModel(ICustomersRepository repository)// : base(store, navigator)
+        public CustomerListViewModel(ICustomersRepository repository)
 		{
 			_repository = repository;
             LoadData();

@@ -4,7 +4,6 @@ using WpfApplication.Commands;
 using WpfApplication.Models;
 using WpfApplication.Services;
 using WpfApplication.State;
-using WpfApplication.Stores;
 
 namespace WpfApplication.ViewModels
 {
@@ -12,7 +11,8 @@ namespace WpfApplication.ViewModels
     {
         private readonly IProductRepository _productRepository;
 
-        public ProductListViewModel(IProductRepository productRepository, ICartRepository cartRepository)
+        public ProductListViewModel(IProductRepository productRepository, 
+            ICartRepository cartRepository)
         {
             _productRepository = productRepository;
 

@@ -9,7 +9,8 @@ namespace WpfApplication.Commands
         private readonly ICustomersRepository _customerRepository;
         private readonly CartViewModel _viewModel;
 
-        public CustomerExistCheckCommand(CartViewModel viewModel, ICustomersRepository customerRepository)
+        public CustomerExistCheckCommand(CartViewModel viewModel, 
+            ICustomersRepository customerRepository)
         {
             _customerRepository = customerRepository;
             _viewModel = viewModel;
@@ -19,8 +20,6 @@ namespace WpfApplication.Commands
         {
             Customer customer = _customerRepository.Search(_viewModel.PhoneNumber);
             _viewModel.IsCreditUsed = false;
-            //UseCreditCommand.OnCanExecuteChanged();
-            //RemoveCreditCommand.OnCanExecuteChanged();
             
             if (customer == null)
             {

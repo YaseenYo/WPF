@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using WpfApplication.Models;
+﻿using System.ComponentModel;
 using WpfApplication.ViewModels;
 
 namespace WpfApplication.Commands

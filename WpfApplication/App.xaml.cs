@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Windows;
 using WpfApplication.Services;
 using WpfApplication.State;
-using WpfApplication.Stores;
 using WpfApplication.ViewModels;
 using WpfApplication.ViewModels.Factories;
 
@@ -16,6 +16,10 @@ namespace WpfApplication
         public App()
         {
             AppHost = Host.CreateDefaultBuilder()
+                .ConfigureLogging( builder =>
+                {
+                    builder.AddDebug();
+                })
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<MainViewModel>();
@@ -40,25 +44,6 @@ namespace WpfApplication
                     services.AddTransient<IViewModelFactory<TransactionViewModel>,TransactionViewModelFactory>();
                     services.AddTransient<IViewModelFactory<AddProductViewModel>,AddProductViewModelFactory>();
                     services.AddTransient<IViewModelFactory<SearchTransactionViewModel>,SearchTransactionViewModelFactory>();
-
-                    services.AddTransient<AddProductViewModel>(sp => new AddProductViewModel(
-                        sp.GetRequiredService<IProductRepository>()));
-                    services.AddTransient<CartViewModel>(sp => new CartViewModel(
-                        sp.GetRequiredService<ICartRepository>(),
-                        sp.GetRequiredService<IProductRepository>(),
-                        sp.GetRequiredService<ICustomersRepository>(),
-                        sp.GetRequiredService<ITransactionRepository>()));
-                    services.AddTransient<CustomerListViewModel>(sp => new CustomerListViewModel(
-                        sp.GetRequiredService<ICustomersRepository>()));
-                    services.AddTransient<CustomerRegistrationViewModel>(sp => new CustomerRegistrationViewModel(
-                        sp.GetRequiredService<ICustomersRepository>()));
-                    services.AddTransient<ProductListViewModel>(sp => new ProductListViewModel(
-                        sp.GetRequiredService<IProductRepository>(),
-                        sp.GetRequiredService<ICartRepository>()));
-                    services.AddTransient<SearchTransactionViewModel>(sp => new SearchTransactionViewModel(
-                        sp.GetRequiredService<ITransactionRepository>()));
-                    services.AddTransient<TransactionViewModel>(sp => new TransactionViewModel(
-                        sp.GetRequiredService<ITransactionRepository>()));
                 })
                 .Build();
         }

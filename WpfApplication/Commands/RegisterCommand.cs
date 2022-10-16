@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Windows;
 using WpfApplication.Models;
 using WpfApplication.Services;
@@ -10,11 +11,14 @@ namespace WpfApplication.Commands
     {
         private readonly CustomerRegistrationViewModel _viewModel;
         private readonly ICustomersRepository _customersRepository;
+        private readonly ILogger<RegisterCommand> _logger;
 
-        public RegisterCommand(CustomerRegistrationViewModel viewModel, ICustomersRepository customersRepository)
+        public RegisterCommand(CustomerRegistrationViewModel viewModel, 
+            ICustomersRepository customersRepository, ILogger<RegisterCommand> logger)
         {
             _viewModel = viewModel;
             _customersRepository = customersRepository;
+            _logger = logger;
         }
 
         public override void Execute(object parameter)
@@ -35,6 +39,7 @@ namespace WpfApplication.Commands
             }
             customer.Id= Guid.NewGuid();
             _customersRepository.Add(customer);
+            _logger.LogInformation($"Customer {customer.Name} have been Registered");
             MessageBox.Show("Customer Registered Successfully");
             _viewModel.Customer = new Customer();
         }

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using WpfApplication.Services;
-using WpfApplication.State;
-using WpfApplication.ViewModels;
+﻿using WpfApplication.State;
 using WpfApplication.ViewModels.Factories;
 
 namespace WpfApplication.Commands
@@ -16,7 +8,8 @@ namespace WpfApplication.Commands
         private readonly INavigator _navigator;
         private readonly IViewModelAbstractFactory _viewModelAbstractFactory;
 
-        public UpdateCurrentViewModelCommand(INavigator navigator, IViewModelAbstractFactory viewModelAbstractFactory)
+        public UpdateCurrentViewModelCommand(INavigator navigator, 
+            IViewModelAbstractFactory viewModelAbstractFactory)
         {
             _navigator = navigator;
             _viewModelAbstractFactory = viewModelAbstractFactory;

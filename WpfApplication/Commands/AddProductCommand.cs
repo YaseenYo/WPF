@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Windows;
 using WpfApplication.Models;
 using WpfApplication.Services;
@@ -7,11 +8,14 @@ namespace WpfApplication.Commands
 {
     internal class AddProductCommand : CommandBase
     {
-        private IProductRepository _productRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly ILogger<AddProductCommand> _logger;
 
-        public AddProductCommand(IProductRepository productRepository)
+        public AddProductCommand(IProductRepository productRepository, 
+            ILogger<AddProductCommand> logger)
         {
             _productRepository = productRepository;
+            _logger = logger;
         }
 
         public override void Execute(object parameter)
@@ -24,6 +28,7 @@ namespace WpfApplication.Commands
             }
             product.Id = Guid.NewGuid();
             _productRepository.Add(product);
+            _logger.LogInformation($"Product with Id {product.Id} Added to Catalog");
             MessageBox.Show("Product Added");
         }
     }
