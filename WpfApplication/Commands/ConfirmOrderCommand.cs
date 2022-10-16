@@ -14,11 +14,12 @@ namespace WpfApplication.Commands
         private readonly ICustomersRepository _customerRepository;
         private readonly ICartRepository _cartRepository;
 
-        public ConfirmOrderCommand(CartViewModel viewModel, ICartRepository cartRepository)
+        public ConfirmOrderCommand(CartViewModel viewModel, ITransactionRepository transactionRepository, 
+            ICustomersRepository customerRepository, ICartRepository cartRepository)
         {
             _viewModel = viewModel;
-            _customerRepository = new CustomersRepository();
-            _transactionRepository = new TransactionRepository();
+            _transactionRepository = transactionRepository;
+            _customerRepository = customerRepository;
             _cartRepository = cartRepository;
         }
 

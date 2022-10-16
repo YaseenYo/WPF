@@ -8,9 +8,9 @@ namespace WpfApplication.Commands
     {
         private readonly ICartRepository _cartRepository;
 
-        public AddToCartCommand()
+        public AddToCartCommand(ICartRepository cartRepository)
         {
-            _cartRepository = new CartRepository(); 
+            _cartRepository = cartRepository;
         }
 
         public override void Execute(object parameter)

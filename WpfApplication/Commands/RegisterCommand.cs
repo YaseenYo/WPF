@@ -8,13 +8,13 @@ namespace WpfApplication.Commands
 {
     internal class RegisterCommand : CommandBase
     {
-        private readonly ICustomersRepository _customersRepository;
         private readonly CustomerRegistrationViewModel _viewModel;
+        private readonly ICustomersRepository _customersRepository;
 
-        public RegisterCommand(CustomerRegistrationViewModel viewModel)
+        public RegisterCommand(CustomerRegistrationViewModel viewModel, ICustomersRepository customersRepository)
         {
-            _customersRepository = new CustomersRepository();
             _viewModel = viewModel;
+            _customersRepository = customersRepository;
         }
 
         public override void Execute(object parameter)

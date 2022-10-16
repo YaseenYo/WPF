@@ -10,7 +10,7 @@ namespace WpfApplication.Commands
 
         public CancelOrderCommand(CartViewModel viewModel,ICartRepository cartRepository)
         {
-            _viewModel = viewModel;
+            _viewModel = viewModel; 
             _cartRepository = cartRepository;
         }
 

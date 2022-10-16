@@ -9,9 +9,9 @@ namespace WpfApplication.ViewModels
     {
 		private readonly ITransactionRepository _repository;
 
-        public TransactionViewModel(NavigationStore navigationStore) : base(navigationStore)
+        public TransactionViewModel(ITransactionRepository repository) //: base(store,navigator)
 		{
-			_repository = new TransactionRepository();
+			_repository = repository;
 			LoadData();
 		} 
 

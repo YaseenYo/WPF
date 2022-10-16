@@ -12,7 +12,7 @@ namespace WpfApplication.Commands
         public RemoveCreditCommand(CartViewModel viewModel)
         {
             _viewModel = viewModel;
-
+             
             _viewModel.PropertyChanged += ViewModel_PropertyChanged;
         }
 

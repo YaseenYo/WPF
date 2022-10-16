@@ -9,10 +9,10 @@ namespace WpfApplication.Commands
         private readonly SearchTransactionViewModel _viewModel;
         private readonly ITransactionRepository _transactionRepository;
 
-        public SearchTransactionCommand(SearchTransactionViewModel viewModel)
+        public SearchTransactionCommand(SearchTransactionViewModel viewModel, ITransactionRepository transactionRepository)
         {
             _viewModel = viewModel;
-            _transactionRepository = new TransactionRepository();
+            _transactionRepository = transactionRepository;
         }
 
         public override void Execute(object parameter)

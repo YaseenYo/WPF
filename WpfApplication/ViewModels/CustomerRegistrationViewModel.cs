@@ -1,15 +1,16 @@
 ﻿using System.Windows.Input;
 using WpfApplication.Commands;
 using WpfApplication.Models;
+using WpfApplication.Services;
 using WpfApplication.Stores;
 
 namespace WpfApplication.ViewModels
 {
     internal class CustomerRegistrationViewModel : ViewModelBase
     {
-        public CustomerRegistrationViewModel(NavigationStore navigationStore) : base(navigationStore)
+        public CustomerRegistrationViewModel(ICustomersRepository customersRepository)// : base(store,navigator)
         {
-            RegisterCommand = new RegisterCommand(this);
+            RegisterCommand = new RegisterCommand(this,customersRepository);
             Customer = new Customer();
         }
 

@@ -10,10 +10,10 @@ namespace WpfApplication.Commands
         private readonly CartViewModel _viewModel;
         private readonly ICartRepository _cartRepository;
 
-        public RemoveProductCommand(CartViewModel viewModel)
+        public RemoveProductCommand(CartViewModel viewModel, ICartRepository cartRepository)
         {
-            _cartRepository = new CartRepository();
             _viewModel = viewModel;
+            _cartRepository = cartRepository;
         }
 
         public override void Execute(object parameter)
@@ -27,8 +27,6 @@ namespace WpfApplication.Commands
                 _viewModel.Cart.TotalAmount = _viewModel.Cart.ProductsAmount;
                 _viewModel.Cart.CreditUsed = 0;
                 _viewModel.IsCreditUsed = false;
-                _viewModel.UseCreditCommand.OnCanExecuteChanged();
-                _viewModel.RemoveCreditCommand.OnCanExecuteChanged();
             }
             else
             {

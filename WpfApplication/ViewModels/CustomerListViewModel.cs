@@ -9,9 +9,9 @@ namespace WpfApplication.ViewModels
     {
 		private readonly ICustomersRepository _repository;
 
-        public CustomerListViewModel(NavigationStore navigationStore) : base(navigationStore)
+        public CustomerListViewModel(ICustomersRepository repository)// : base(store, navigator)
 		{
-			_repository = new CustomersRepository();
+			_repository = repository;
             LoadData();
 		} 
         

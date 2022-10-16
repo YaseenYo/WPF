@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         xmlns:view="clr-namespace:WpfApplication.Views"
         xmlns:vm="clr-namespace:WpfApplication.ViewModels"
+        xmlns:controls="clr-namespace:WpfApplication.Controls"
         Title="MainWindow" Height="450" Width="800">
     
     <Grid>
@@ -33,7 +34,12 @@
                 <view:AddProductView/>
             </DataTemplate>
         </Grid.Resources>
-
-        <ContentControl Content="{Binding CurrentViewModel}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <controls:NavigationBar DataContext="{Binding Navigator}" Grid.Row="0" />
+        <ContentControl Grid.Row="1" Content="{Binding Navigator.CurrentViewModel}" />
     </Grid>
 </Window>

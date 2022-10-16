@@ -9,9 +9,9 @@ namespace WpfApplication.Commands
         private readonly ICustomersRepository _customerRepository;
         private readonly CartViewModel _viewModel;
 
-        public CustomerExistCheckCommand(CartViewModel viewModel)
+        public CustomerExistCheckCommand(CartViewModel viewModel, ICustomersRepository customerRepository)
         {
-            _customerRepository = new CustomersRepository();
+            _customerRepository = customerRepository;
             _viewModel = viewModel;
         }
 

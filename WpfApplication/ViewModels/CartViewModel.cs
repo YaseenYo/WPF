@@ -11,24 +11,26 @@ namespace WpfApplication.ViewModels
     {
         private readonly ICartRepository _cartRepository;
 
-        public CartViewModel(NavigationStore navigationStore) : base(navigationStore)
+        public CartViewModel(ICartRepository cartRepository, IProductRepository productRepository,
+            ICustomersRepository customerRepository, ITransactionRepository transactionRepository)
         {
-            _cartRepository = new CartRepository();
+            _cartRepository = cartRepository;
             Cart = _cartRepository.GetCart();
             Cart.ProductsAmount = _cartRepository.GetProductsAmount();
             Cart.TotalAmount = Cart.ProductsAmount - Cart.CreditUsed;
             IsCreditUsed = Cart.CreditUsed != 0;
-            CustomerExistCheckCommand = new CustomerExistCheckCommand(this);
-            RemoveProductCommand = new RemoveProductCommand(this);
+            CustomerExistCheckCommand = new CustomerExistCheckCommand(this,customerRepository);
+            RemoveProductCommand = new RemoveProductCommand(this,cartRepository);
             UseCreditCommand = new UseCreditCommand(this);
             RemoveCreditCommand = new RemoveCreditCommand(this);
-            ConfirmOrderCommand = new ConfirmOrderCommand(this, _cartRepository);
+            ConfirmOrderCommand = new ConfirmOrderCommand(this, transactionRepository, 
+                customerRepository, _cartRepository);
             CancelOrderCommand = new CancelOrderCommand(this,_cartRepository);
         }
 
         public ICommand CustomerExistCheckCommand { get; }
-        public UseCreditCommand UseCreditCommand { get; }
-        public RemoveCreditCommand RemoveCreditCommand { get; }
+        public ICommand UseCreditCommand { get; }
+        public ICommand RemoveCreditCommand { get; }
         public ICommand ConfirmOrderCommand { get; }
         public ICommand CancelOrderCommand { get; }
         public ICommand RemoveProductCommand { get; }

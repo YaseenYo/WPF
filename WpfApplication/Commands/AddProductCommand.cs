@@ -9,9 +9,9 @@ namespace WpfApplication.Commands
     {
         private IProductRepository _productRepository;
 
-        public AddProductCommand()
+        public AddProductCommand(IProductRepository productRepository)
         {
-            _productRepository = new ProductRepository();
+            _productRepository = productRepository;
         }
 
         public override void Execute(object parameter)

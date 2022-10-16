@@ -4,15 +4,16 @@ using System.Linq;
 using System.Windows.Input;
 using WpfApplication.Commands;
 using WpfApplication.Models;
+using WpfApplication.Services;
 using WpfApplication.Stores;
 
 namespace WpfApplication.ViewModels
 {
     internal class AddProductViewModel : ViewModelBase
     {
-        public AddProductViewModel(NavigationStore navigationStore) : base(navigationStore)
+        public AddProductViewModel(IProductRepository productRepository)
         {
-            AddProductCommand = new AddProductCommand();
+            AddProductCommand = new AddProductCommand(productRepository);
             Product = new Product();
         }
 

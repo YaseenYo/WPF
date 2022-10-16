@@ -3,7 +3,7 @@ using WpfApplication.ViewModels;
 
 namespace WpfApplication.Stores
 {
-    internal class NavigationStore
+    internal class NavigationStore : INavigationStore
     {
         public event Action CurrentViewModelChanged;
 
@@ -12,8 +12,8 @@ namespace WpfApplication.Stores
         public ViewModelBase CurrentViewModel
         {
             get { return _currentViewModel; }
-            set 
-            { 
+            set
+            {
                 _currentViewModel = value;
                 OnCurrentViewModelChanged();
             }

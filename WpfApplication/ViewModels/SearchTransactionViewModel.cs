@@ -2,16 +2,17 @@
 using System.Windows.Input;
 using WpfApplication.Commands;
 using WpfApplication.Models;
+using WpfApplication.Services;
 using WpfApplication.Stores;
 
 namespace WpfApplication.ViewModels
 {
     internal class SearchTransactionViewModel : ViewModelBase
     {
-        public SearchTransactionViewModel(NavigationStore navigationStore) : base(navigationStore)
+        public SearchTransactionViewModel(ITransactionRepository transactionRepository) //: base(store,navigator)
         {
             Transaction = new Transaction();
-            SearchTransactionCommand = new SearchTransactionCommand(this);
+            SearchTransactionCommand = new SearchTransactionCommand(this, transactionRepository);
         }
 
         private Guid _transactionId;
